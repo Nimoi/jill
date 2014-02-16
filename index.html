@@ -2,17 +2,28 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<title>Jill</title>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script>
-		function newColor() {
-			var color = "#" + Math.random().toString(16).slice(2, 8);
-			$('.container').css("background-color",color);
-			setTimeout(function() {
-				newColor();
-			}, 500);
+		var colors = {
+			all: ['F4B244','F03880','F2EDD0','16CBB8','008E9A'],
+			current: '#F4B244',
+			previous: '#F03880',
+			newColor: function() {
+				colors.previous = colors.current;
+				// var color = "#" + Math.random().toString(16).slice(2, 8);
+				var color = "#"+colors.all[~~(Math.random()*colors.all.length)];
+				while(color == colors.previous) {
+					color = "#"+colors.all[~~(Math.random()*colors.all.length)];
+				}
+				$('.container').css("background-color",color);
+				colors.current = color;
+				setTimeout(function() {
+					colors.newColor();
+				}, 500);
+			},
 		}
-		newColor();
+		colors.newColor();
 	</script>
 	<style>
 		body {
